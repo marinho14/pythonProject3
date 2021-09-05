@@ -16,9 +16,12 @@ if __name__ == '__main__':
     lista=mt.descom(image,N)
     imagen_ILL = lista[-1][-1]
     img_int=mt.Interpolacion(4,imagen_ILL)
-
+    num = 1
+    for a in (lista):
+        for b in a:
+            cv2.imshow("Ciclo 1" + str(num), b)
+            num += 1
     cv2.imshow("Imagen Original",image)
-    cv2.imshow("Imagen ILL",imagen_ILL)
     cv2.imshow("Imagen Interpolada", img_int)
     cv2.waitKey(0)
 
