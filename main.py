@@ -22,7 +22,7 @@ if __name__ == '__main__':
         for b in a:
             cv2.imshow("Ciclo" + str(num), b)
             num += 1
-    #Se imprimen las imagenes descompuestas, la original y la interpolada
+    #Se imprimen las imagenes descompuestas , la original y la interpolada
     cv2.imshow("Imagen Original",image)
     cv2.imshow("Imagen Interpolada", img_int)
     cv2.waitKey(0)
