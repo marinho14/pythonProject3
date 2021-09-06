@@ -1,7 +1,5 @@
 import cv2  ## Se importan las librerias
 import numpy as np
-import os
-import sys
 
 
 def Diezmado(D, image_gray):  ## Se define el metodo de diezmado, dando como parametro de entrada D y una imagen en grises
@@ -31,8 +29,7 @@ def Diezmado(D, image_gray):  ## Se define el metodo de diezmado, dando como par
     radius_cut_off_c = int(freq_cut_off * half_size_c)
 
     ## Se define la formula de la elipse para restringir ciertas frecuencias
-    idx_lp = ((((row_iter - half_size_r) ** 2)/(radius_cut_off_r**2))+(((col_iter - half_size_c) ** 2)/
-                                                                           (radius_cut_off_c**2))) < 1
+    idx_lp = ((((row_iter - half_size_r) ** 2)/(radius_cut_off_r**2))+(((col_iter - half_size_c) ** 2)/(radius_cut_off_c**2))) < 1
     low_pass_mask[idx_lp] = 1
 
     # Se filtra la imagen
