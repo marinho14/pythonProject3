@@ -69,8 +69,8 @@ def Interpolacion(I, image_gray):  ## Se define el metodo de interpolacion donde
     enum_rows = np.linspace(0, num_rows - 1, num_rows)
     enum_cols = np.linspace(0, num_cols - 1, num_cols)
     col_iter, row_iter = np.meshgrid(enum_cols, enum_rows)
-    half_size_r = num_rows / 2 - 1  # here we assume num_rows = num_columns
-    half_size_c = num_cols / 2 - 1  # here we assume num_rows = num_columns
+    half_size_r = num_rows / 2 - 1  # Se define el numero de filas
+    half_size_c = num_cols / 2 - 1  # Se define el numero de columnas
 
     # low pass filter mask
     low_pass_mask = np.zeros_like(image_zeros)
