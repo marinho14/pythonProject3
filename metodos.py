@@ -4,8 +4,10 @@ import os
 import sys
 
 
-def Diezmado(D, image_gray):  ## Se define el metodo de diezmado
-    assert D > 1 and type(D) is int, "D debe ser mayor a 1 y entero"
+def Diezmado(D, image_gray):  ## Se define el metodo de diezmado, dando como parametro de entrada D y una imagen en grises
+    assert D > 1 and type(D) is int, "D debe ser mayor a 1 y entero"  ## Se define una condicion para que D sea entero y mayor a 1
+    #Filtrado
+    ## Se hace la fft de la imagen Para el filtrado
     image_gray_fft = np.fft.fft2(image_gray)
     image_gray_fft_shift = np.fft.fftshift(image_gray_fft)
 
@@ -19,28 +21,30 @@ def Diezmado(D, image_gray):  ## Se define el metodo de diezmado
     enum_rows = np.linspace(0, num_rows - 1, num_rows)
     enum_cols = np.linspace(0, num_cols - 1, num_cols)
     col_iter, row_iter = np.meshgrid(enum_cols, enum_rows)
-    half_size_r = num_rows / 2 - 1  # here we assume num_rows = num_columns
-    half_size_c = num_cols / 2 - 1  # here we assume num_rows = num_columns
+    half_size_r = num_rows / 2 - 1  # Se define el numero de filas
+    half_size_c = num_cols / 2 - 1  # Se define el numero de columnas
 
     # low pass filter mask
     low_pass_mask = np.zeros_like(image_gray)
-    freq_cut_off = 1 / D  # it should less than 1
+    freq_cut_off = 1 / D  # Se define la frecuencia de corte
     radius_cut_off_r = int(freq_cut_off * half_size_r)
     radius_cut_off_c = int(freq_cut_off * half_size_c)
+
+    ## Se define la formula de la elipse para restringir ciertas frecuencias
     idx_lp = ((((row_iter - half_size_r) ** 2)/(radius_cut_off_r**2))+(((col_iter - half_size_c) ** 2)/
                                                                            (radius_cut_off_c**2))) < 1
     low_pass_mask[idx_lp] = 1
 
-    # filtering via FFT
+    # Se filtra la imagen
     mask = low_pass_mask  # can also use high or band pass mask
     fft_filtered = image_gray_fft_shift * mask
     image_filtered = np.fft.ifft2(np.fft.fftshift(fft_filtered))
     image_filtered = np.absolute(image_filtered)
     image_filtered /= np.max(image_filtered)
 
-    # Decimation
+    # Decimation, Se decima la imagen filtrada cada D
     image_decimated = image_filtered[::D, ::D]
-    return image_decimated
+    return image_decimated  ## Se retorna la imagen decimada
 
 
 
