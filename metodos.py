@@ -33,7 +33,7 @@ def Diezmado(D, image_gray):  ## Se define el metodo de diezmado, dando como par
     low_pass_mask[idx_lp] = 1
 
     # Se filtra la imagen
-    mask = low_pass_mask  # can also use high or band pass mask
+    mask = low_pass_mask
     fft_filtered = image_gray_fft_shift * mask
     image_filtered = np.fft.ifft2(np.fft.fftshift(fft_filtered))
     image_filtered = np.absolute(image_filtered)
@@ -68,8 +68,8 @@ def Interpolacion(I, image_gray):  ## Se define el metodo de interpolacion donde
     enum_rows = np.linspace(0, num_rows - 1, num_rows)
     enum_cols = np.linspace(0, num_cols - 1, num_cols)
     col_iter, row_iter = np.meshgrid(enum_cols, enum_rows)
-    half_size_r = num_rows / 2 - 1  # here we assume num_rows = num_columns
-    half_size_c = num_cols / 2 - 1  # here we assume num_rows = num_columns
+    half_size_r = num_rows / 2 - 1  # Se define el numero de filas
+    half_size_c = num_cols / 2 - 1  # Se define el numero de columnas
 
     # low pass filter mask
     low_pass_mask = np.zeros_like(image_zeros)
@@ -82,7 +82,7 @@ def Interpolacion(I, image_gray):  ## Se define el metodo de interpolacion donde
     low_pass_mask[idx_lp] = 1
 
     # filtering via FFT
-    mask = low_pass_mask  # can also use high or band pass mask
+    mask = low_pass_mask
     fft_filtered = image_gray_fft_shift * mask
     image_filtered = np.fft.ifft2(np.fft.fftshift(fft_filtered))
     image_filtered = np.absolute(image_filtered)
@@ -93,7 +93,7 @@ def Interpolacion(I, image_gray):  ## Se define el metodo de interpolacion donde
 
 
 def descom(image,N):  ## Se define el metodo de descomposicion
-    ## Se definen los filtros
+    ## Se definen los kernels de los filtros
     H = np.array([[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]])
     V = np.array([[1, 2, 1], [0, 0, 0], [-1, -2, -1]])
     D = np.array([[2, -1, -2], [-1, 4, -1], [-2, -1, 2]])
@@ -101,7 +101,7 @@ def descom(image,N):  ## Se define el metodo de descomposicion
 
     image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)  ## Se transforma la imagen a grises
     lista_in = [image_gray]  ## Se crea una lista, y se iguala la primera posición a la imagen en grises
-    lista_out = []  ## Se define una lista vacia para la salida
+    lista_out = []  ## Se define una lista vacia para las imagenes descompuestas
 
     for i in range (N):
         H_convolved = cv2.filter2D(lista_in[i], -1, H)  ## Se hace la convolucion entre el filtro y la posicion i de la lista
@@ -116,8 +116,8 @@ def descom(image,N):  ## Se define el metodo de descomposicion
 
         lista_in.append(IL) ## Se agrega IL a la lista_in para que sea la entrada en el siguiente ciclo
 
-        ## Se define la entrada de la lista de salida de acuererdo a la iteración, solo en la ultima se guarda, la
-        #  imagen ILL(LLLL)
+        ## Se define la entrada de la lista de salida de acuerdo a la iteración. Solo en la ultima iteracion se guarda, la
+        #  imagen ILL
         if i<N-1:
          lista_out.append([IH,IV,ID])
         else:
