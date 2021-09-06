@@ -3,7 +3,7 @@ import numpy as np
 
 
 def Diezmado(D, image_gray):  ## Se define el metodo de diezmado, dando como parametro de entrada D y una imagen en grises
-    assert D > 1 and type(D) is int, "D debe ser mayor a 1 y entero"  ## Se define una condicion para que D sea entero y mayor a 1
+    assert D >= 1 and type(D) is int, "D debe ser mayor a 1 y entero"  ## Se define una condicion para que D sea entero y mayor a 1
     #Filtrado
     ## Se hace la fft de la imagen Para el filtrado
     image_gray_fft = np.fft.fft2(image_gray)
@@ -46,6 +46,7 @@ def Diezmado(D, image_gray):  ## Se define el metodo de diezmado, dando como par
 
 
 def Interpolacion(I, image_gray):  ## Se define el metodo de interpolacion donde se define una imagen gris y un parametro I
+    assert I >= 1 and type(I) is int, "I debe ser mayor a 1 y entero"  ## Se define una condicion para que I sea entero y mayor a 1
     # Interpolation
     # insert zeros
     rows, cols = image_gray.shape
