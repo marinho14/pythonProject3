@@ -1,11 +1,11 @@
-import cv2
+import cv2  ## Se importan las librerias
 import numpy as np
 import os
 import sys
 
 
-def Diezmado(D, image_gray):
-    #assert (D > 1 and type(D) is int, "D debe ser mayor a 1 y entero")
+def Diezmado(D, image_gray):  ## Se define el metodo de diezmado
+    assert D > 1 and type(D) is int, "D debe ser mayor a 1 y entero"
     image_gray_fft = np.fft.fft2(image_gray)
     image_gray_fft_shift = np.fft.fftshift(image_gray_fft)
 
